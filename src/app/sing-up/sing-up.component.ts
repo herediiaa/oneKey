@@ -70,7 +70,7 @@ export class SingUpComponent {
     console.log(values);
   }
   onLogOut(){
-    this.googleAuthService.singOut()
+    this.googleAuthService.logOut()
     localStorage.setItem("users","null")
   }
 

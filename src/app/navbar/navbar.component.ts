@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { GoogleAuthService } from '../service/google-auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -6,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent {
+  constructor(private readonly googleAuthService:GoogleAuthService){}
+  logout() {
+     this.googleAuthService.logOut() 
+   }
 
 }

@@ -18,11 +18,13 @@ export class GoogleAuthService {
   ) {
     this.afAuth.authState.subscribe((user) => {
       if (user) {
+        this.router.navigate(['/site-list'])
         localStorage.setItem('user', JSON.stringify(user));
         console.log('hay un usuario logeado')
         return;
       }
       console.log('no hay nadie logeado');
+
     });
   }
   async singUp(email: string, password: string) {
@@ -45,8 +47,9 @@ export class GoogleAuthService {
       this.databaseService.createUser(userDocReference.user)
     })
   }
-  singOut() {
+  logOut() {
     this.afAuth.signOut();
+    localStorage.setItem("user","null")
   }
 
 }

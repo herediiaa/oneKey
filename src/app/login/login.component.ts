@@ -6,27 +6,35 @@ import { GoogleAuthService } from '../service/google-auth.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
-
   formGroup!: FormGroup;
-
+  popMessage!: string;
   isError: boolean = false;
   googleAuth: any;
   constructor(
-    private readonly googleAuthService:GoogleAuthService,
+    private readonly googleAuthService: GoogleAuthService,
     private router: Router,
-    private readonly formbuilder: FormBuilder,
+    private readonly formbuilder: FormBuilder
   ) {
     this.formGroup = this.createForm();
   }
   onSubmit(value: any) {
-    this.googleAuthService.logIn(value.email,value.password).then((userReference:any)=>{
-      console.log("estaba ya registrado", userReference)
-    }).catch((err:any)=>{
-      console.log("usuario no esta registrado", err)
-    })
+    this.googleAuthService
+      .logIn(value.email, value.password)
+      .then((userReference: any) => {
+        console.log('estaba ya registrado', userReference);
+        this.router.navigate(['/site-list']);
+      })
+      .catch((err: any) => {
+        if (err.code == 'auth/user-not-found') {
+          this.formError(`${value.email} is not a valid user`);
+          setTimeout(() => {
+            this.isError = false;
+          }, 2000);
+        }
+      });
   }
   createForm() {
     return this.formbuilder.group({
@@ -34,10 +42,13 @@ export class LoginComponent {
       password: ['', Validators.required],
     });
   }
-  onEnterGoogle(){
-    this.googleAuthService.googleAuth().then(()=>{
-      this.router.navigate([''])
-    })
+  onEnterGoogle() {
+    this.googleAuthService.googleAuth().then(() => {
+      this.router.navigate(['']);
+    });
   }
-
+  formError(text: string) {
+    this.isError = true;
+    this.popMessage = text;
+  }
 }
