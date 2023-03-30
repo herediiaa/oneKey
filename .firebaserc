@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "onekey-d3271": {
+      "hosting": {
+        "oneKey": [
+          "onekey-d3271"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "onekey-d3271"
+  }
+}
