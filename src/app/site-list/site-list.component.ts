@@ -20,8 +20,7 @@ export class SiteListComponent {
     this.userInfo = JSON.parse(localStorage.getItem("user")!)
     console.log(this.userInfo)
     console.log(this.userInfo?.uid)
-    this.loadSites(this.userInfo.uid);
-
+    this.loadSites(this.userInfo.uid)
   }
  
   formGroup!: FormGroup 
@@ -38,12 +37,13 @@ export class SiteListComponent {
 
   isSuccess: boolean = false;
   popText!: string;
-  allSites!: Observable<Array<any>>;
+
+  allSites!: Array<any>;
   loadSites(userUid:string) {
-    this.allSites = this.databaseService.loadSites(userUid)
-    this.allSites.forEach(doc => {
-      console.log(doc)
-    });
+   this.databaseService.loadSites(userUid).subscribe((doc)=>{
+    this.allSites = doc
+   })
+
   } 
   onSubmit(values:any) {
     if (this.formState === 'Add New') {

@@ -105,7 +105,7 @@
 
   <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 ">
     <div
-      *ngFor="let site of allSites | async"
+      *ngFor="let site of allSites "
       class="shadow-lg border-2 "
     >
       <img [src]="site.siteImgUrl" alt="banner" />
