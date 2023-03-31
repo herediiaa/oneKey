@@ -10,9 +10,11 @@ import { Router } from '@angular/router';
 export class NavbarComponent {
   constructor(
     private readonly googleAuthService: GoogleAuthService,
+    private readonly router:Router
     
   ) {}
-  logout() {
-    this.googleAuthService.logOut();
+  async logout() {
+    await this.googleAuthService.logOut()
+    this.router.navigate(['/'])
   }
 }

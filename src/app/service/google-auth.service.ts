@@ -18,8 +18,8 @@ export class GoogleAuthService {
   ) {
     this.afAuth.authState.subscribe((user) => {
       if (user) {
-        this.router.navigate(['/site-list'])
         localStorage.setItem('user', JSON.stringify(user));
+        this.router.navigate(['/site-list'])
         console.log('hay un usuario logeado')
         return;
       }
@@ -50,6 +50,7 @@ export class GoogleAuthService {
   logOut() {
     this.afAuth.signOut();
     localStorage.setItem("user","null")
+    return true
   }
 
 }
