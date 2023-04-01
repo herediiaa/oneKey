@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { GoogleAuthService } from '../service/google-auth.service';
@@ -35,7 +35,8 @@ export class PasswordListComponent implements OnInit {
     private readonly router: ActivatedRoute,
     private formBuilder: FormBuilder,
     private readonly googleAuthService: GoogleAuthService,
-    private readonly databaseService: DatabaseService
+    private readonly databaseService: DatabaseService,
+    private dom: ElementRef
   ) {
     this.userInfo = JSON.parse(localStorage.getItem('user')!);
     this.formGroup = this.createForm();
@@ -55,10 +56,11 @@ export class PasswordListComponent implements OnInit {
         .createPassword(passwordData, this.siteInfo.id, this.userInfo.uid)
         .then(() => {
           this.resetForm();
+          this.redirijir("passwordSeccion")
           this.messageSuccessfull('User & Password Added Correctly');
           setTimeout(() => {
             this.isSuccess = false;
-          }, 2000);
+          }, 3000);
         });
     } else if(this.formStatus == 'Edit') {
       passwordData.password = this.encrypPassword(passwordData.password)
@@ -98,6 +100,7 @@ export class PasswordListComponent implements OnInit {
       });
   }
   onEditPassword(password: any) {
+    this.redirijir('formSeccion')
     this.formPasswordId = password.id;
     const pas = password.password;
     const a = this.decryptPassword(pas);
@@ -148,11 +151,7 @@ export class PasswordListComponent implements OnInit {
   }
 
   onCancel() {
-    this.formGroup.setValue({
-      email: '',
-      username: '',
-      password: '',
-    });
+    this.resetForm()
   }
 
   createForm() {
@@ -161,5 +160,9 @@ export class PasswordListComponent implements OnInit {
       username: ['', Validators.required],
       password: ['', Validators.required],
     });
+  }
+  redirijir(id:string){
+    const seccion = this.dom.nativeElement.querySelector(`#${id}`)
+    seccion.scrollIntoView({ behavior: 'smooth' });
   }
 }

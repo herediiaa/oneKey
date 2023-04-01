@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Observable } from 'rxjs';
 import { doc } from '@angular/fire/firestore';
+import { ElementRef } from '@angular/core';
+
 
 @Component({
   selector: 'app-site-list',
@@ -17,7 +19,8 @@ export class SiteListComponent implements OnInit {
   constructor(
     private readonly databaseService: DatabaseService,
     private formBuilder: FormBuilder,
-    private readonly afAuth:AngularFireAuth
+    private readonly afAuth:AngularFireAuth,
+    private dom: ElementRef
   ) {
     this.formGroup = this.createForm()
     this.userInfo = JSON.parse(localStorage.getItem("user")!)
@@ -50,6 +53,7 @@ export class SiteListComponent implements OnInit {
     if (this.formState === 'Add New') {
       this.databaseService.saveSite(values,this.userInfo.uid).then(()=>{
         this.resetForm()
+        this.redirijir("cardSeccion")
         this.messageSuccessfull("site create correctly")
         setTimeout(() => {
           this.isSuccess = false
@@ -60,6 +64,7 @@ export class SiteListComponent implements OnInit {
     } else if (this.formState === 'Edit') {
       this.databaseService.editSite(values,this.userInfo.uid,this.formCurrentIdSite).then(() => {
         this.resetForm()
+        this.redirijir("cardSeccion")
         this.messageSuccessfull(`Site ${values.siteName} edit correctly `)
 
         setTimeout(() => {
@@ -70,6 +75,7 @@ export class SiteListComponent implements OnInit {
     }
   }
   editSite(site: any) {
+    this.redirijir("formSeccion")
     this.formCurrentIdSite = site.id;
     this.formGroup.setValue({
       siteName: site.siteName,
@@ -104,5 +110,8 @@ export class SiteListComponent implements OnInit {
     const form = document.querySelector("form")
     form?.reset()
   }
-
+  redirijir(id:string){
+    const seccion = this.dom.nativeElement.querySelector(`#${id}`)
+    seccion.scrollIntoView({ behavior: 'smooth' });
+  }
 }

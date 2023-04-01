@@ -7,8 +7,7 @@
     forgetting your login credentials again.
   </p>
   <button
-    [disabled]="!formGroup.valid"
-    (click)="onSubmit(formGroup.value)"
+    (click)="redirijir('formSeccion')"
     class="mb-5 mx-0 py-2 px-4 border-2 text-sm bg-gray-900 text-white shadow rounded-md"
   >
     Add New Site
@@ -16,14 +15,14 @@
 
   <!-- site generator -->
 
-  <div class="px-20 py-10 mb-10 my-5 border-4 border-gray-900">
+  <div id="formSeccion" class="px-20 py-10 mb-10 my-5 border-4 border-gray-900">
     <h2 class="text-3xl text-center">{{ formState }} Site</h2>
     <p class="text-center text-xl">you can {{ formState }} site below form</p>
 
     <!-- form generator -->
     <form
       [formGroup]="formGroup"
-      id="id"
+      
       (ngSubmit)="onSubmit(formGroup.value)"
     >
       <div class="flex flex-col">
@@ -105,7 +104,7 @@
   </div>
   <!-- cards lists -->
 
-  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-1">
+  <div id="cardSeccion" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-1">
     <div *ngFor="let site of allSites" class="shadow-lg border-2">
       <img [src]="site.siteImgUrl" alt="banner" />
       <h3 class="p-3 text-xl font-bold">{{ site.siteName }}</h3>
