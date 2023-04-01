@@ -9,34 +9,40 @@ import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
   {
-path:"",
-redirectTo:"/home",
-pathMatch:"full"
+    path: '',
+    redirectTo: '/home',
+    pathMatch: 'full',
+  },
+  {
+    path:"**",
+    redirectTo:"/home"
   },
   {
     path: 'home',
     component: HomeComponent,
   },
   {
-    path: "login",
+    path: 'login',
     component: LoginComponent,
   },
   {
-    path:'singUp',
-    component: SingUpComponent
+    path: 'singUp',
+    component: SingUpComponent,
   },
   {
     path: 'site-list',
-    component: SiteListComponent, canActivate:[GuardGuard]
+    component: SiteListComponent,
+    canActivate: [GuardGuard],
   },
   {
     path: 'password-list',
-    component: PasswordListComponent,canActivate:[GuardGuard] 
+    component: PasswordListComponent,
+    canActivate: [GuardGuard],
   },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
