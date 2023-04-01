@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { GoogleAuthService } from '../service/google-auth.service';
@@ -13,7 +13,10 @@ import { environment } from 'src/environments/environments.prod';
   templateUrl: './password-list.component.html',
   styleUrls: ['./password-list.component.css'],
 })
-export class PasswordListComponent {
+export class PasswordListComponent implements OnInit {
+  ngOnInit(): void {
+      window.scrollTo(0,0)
+  }
   passwordDecrypte!: string;
   siteInfo!: any;
   sitePasswords!: Array<any>;

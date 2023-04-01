@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DatabaseService } from '../service/database.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
@@ -10,7 +10,10 @@ import { doc } from '@angular/fire/firestore';
   templateUrl: './site-list.component.html',
   styleUrls: ['./site-list.component.css']
 })
-export class SiteListComponent {
+export class SiteListComponent implements OnInit {
+  ngOnInit(): void {
+      window.scrollTo(0,0)
+  }
   constructor(
     private readonly databaseService: DatabaseService,
     private formBuilder: FormBuilder,
