@@ -91,5 +91,9 @@ export class SingUpComponent {
     this.isSuccess = true;
     this.popMessage = text;
   }
-
+  onEnterGoogle() {
+    this.googleAuthService.googleAuth().then(() => {
+      this.router.navigate(['']);
+    });
+  }
 }
