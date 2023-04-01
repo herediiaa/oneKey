@@ -1,5 +1,5 @@
 
-<section class="bg-gray-50 w-full h-screen">
+<div class="bg-gray-50 w-full h-screen">
   <div
     class="flex flex-col items-center justify-center px-6 py-8 h-screen mx-auto"
   >
@@ -76,16 +76,21 @@
           </button>
         </form>
 
-
-        <button
-          type="button"
-          routerLink="/"
-          class="text-center border-2 bg-white flex justify-center gap-1 text-black border-gray-900 font-medium w-full py-2.5 px-5 rounded-lg shadow-md"
-        >
-          I Have an Account
-        </button>
-
       </div>
     </div>
+    
+    <div class="flex flex-row justify-center items-center w-96 mt-4">
+      <a
+        routerLink="/login"
+        type="button"
+        class="text-center text-black font-medium hover:text-gray-700"
+      >
+        Already have an Account?
+      </a>
+    </div>
   </div>
-</section>
+  <div class="absolute bottom-1 right-0 left-0">
+    <p class=" text-sm text-center ">© 2023 · oneKeyy by Emmanuel Heredia · All rights reserved</p>
+</div>
+</div>
+

@@ -67,7 +67,6 @@ export class SingUpComponent {
         this.resetForm();
 
       })
-    console.log(values);
   }
   onLogOut(){
     this.googleAuthService.logOut()
@@ -92,11 +91,5 @@ export class SingUpComponent {
     this.isSuccess = true;
     this.popMessage = text;
   }
-  /*
-  registerByGoogle(){
-    return this.googleAuth.googleAuth()
-  }
-  onCreateAccout(email:string,password:string){
-    this.googleAuth.signUp
-  } */
+
 }

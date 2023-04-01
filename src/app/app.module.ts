@@ -16,6 +16,10 @@ import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { provideFunctions,getFunctions } from '@angular/fire/functions';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularFireModule } from '@angular/fire/compat';
+import {MatIconModule} from '@angular/material/icon';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HomeComponent } from './home/home.component';
+
 
 @NgModule({
   declarations: [
@@ -24,10 +28,12 @@ import { AngularFireModule } from '@angular/fire/compat';
     SingUpComponent,
     PasswordListComponent,
     NavbarComponent,
-    LoginComponent
+    LoginComponent,
+    HomeComponent,
   ],
   imports: [
     FormsModule,
+    MatIconModule,
     AppRoutingModule,
     ReactiveFormsModule,
     BrowserModule,
@@ -37,7 +43,8 @@ import { AngularFireModule } from '@angular/fire/compat';
     provideDatabase(() => getDatabase()),
     provideFirestore(() => getFirestore()),
     provideFunctions(() => getFunctions()),
-    AngularFireModule.initializeApp(environment.firebase)
+    AngularFireModule.initializeApp(environment.firebase),
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

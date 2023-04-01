@@ -6,6 +6,7 @@ import { AES, enc } from 'crypto-js';
 import { DatabaseService } from '../service/database.service';
 import { Observable } from 'rxjs';
 import { AngularFirestoreCollection } from '@angular/fire/compat/firestore';
+import { environment } from 'src/environments/environments.prod';
 
 @Component({
   selector: 'app-password-list',
@@ -15,9 +16,10 @@ import { AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 export class PasswordListComponent {
   passwordDecrypte!: string;
   siteInfo!: any;
-  sitePasswords!: Array<any>
+  sitePasswords!: Array<any>;
   formGroup!: FormGroup;
   userInfo!: any;
+  canEdit: boolean = false;
 
   formStatus: string = 'Add New';
   formPasswordId!: string;
@@ -33,10 +35,8 @@ export class PasswordListComponent {
     private readonly databaseService: DatabaseService
   ) {
     this.userInfo = JSON.parse(localStorage.getItem('user')!);
-    console.log(this.userInfo);
     this.formGroup = this.createForm();
     this.router.queryParams.subscribe((data: any) => {
-      console.log(data);
       this.siteInfo = data;
       /* site.id
       site.siteName
@@ -48,7 +48,6 @@ export class PasswordListComponent {
   async onSubmit(passwordData: any) {
     if (this.formStatus == 'Add New') {
       passwordData.password = this.encrypPassword(passwordData.password);
-      console.log(passwordData);
       await this.databaseService
         .createPassword(passwordData, this.siteInfo.id, this.userInfo.uid)
         .then(() => {
@@ -58,7 +57,8 @@ export class PasswordListComponent {
             this.isSuccess = false;
           }, 2000);
         });
-    } else {
+    } else if(this.formStatus == 'Edit') {
+      passwordData.password = this.encrypPassword(passwordData.password)
       this.databaseService
         .editPassword(
           passwordData,
@@ -67,6 +67,7 @@ export class PasswordListComponent {
           this.formPasswordId
         )
         .then(() => {
+          this.decrypStatus = 'Decrypt';
           this.resetForm();
           this.messageSuccessfull('User & Password Edit Correctly');
           setTimeout(() => {
@@ -74,50 +75,19 @@ export class PasswordListComponent {
           }, 2000);
         });
     }
-    /* if (this.formStatus === 'Add New') {
-      data.password = this.encrypPassword(data.password);
-      this.passwordManagerService
-        .addPasswords(data, this.siteInfo.id)
-        .then(() => {
-          this.resetForm();
-          this.messageSuccessfull('User & Password Added Correctly');
-          setTimeout(() => {
-            this.isSuccess = false;
-          }, 2000);
-        })
-        .catch((err:any) => {
-          console.log(err);
-        }); */
-  } /* else if (this.formStatus === 'Edit') {
-      this.passwordManagerService
-        .editPassword(this.formPasswordId, this.siteInfo.id, data)
-        .then(() => {
-          this.resetForm();
-          this.messageSuccessfull('User & Password Edit Correctly');
-          setTimeout(() => {
-            this.isSuccess = false;
-          }, 2000);
-        })
-        .catch((err:any) => {
-          console.log(err);
-        });
-    }
-  } */
+  }
   loadPassword() {
-     this.databaseService.loadPasswords(
-      this.siteInfo.id,
-      this.userInfo.uid
-    ).subscribe((val)=>{
-      this.sitePasswords = val
-    })
-
-    
+    this.databaseService
+      .loadPasswords(this.siteInfo.id, this.userInfo.uid)
+      .subscribe((val) => {
+        this.sitePasswords = val;
+      });
   }
   onDelitePassword(passwordId: string) {
-    console.log(passwordId); /* id de la contrasena */
     this.databaseService
       .delitePassword(this.userInfo.uid, this.siteInfo.id, passwordId)
       .then(() => {
+        this.resetForm()
         this.messageSuccessfull('Password Delited Correctly');
         setTimeout(() => {
           this.isSuccess = false;
@@ -126,6 +96,9 @@ export class PasswordListComponent {
   }
   onEditPassword(password: any) {
     this.formPasswordId = password.id;
+    const pas = password.password;
+    const a = this.decryptPassword(pas);
+    console.log(a);
     this.formGroup.setValue({
       username: password.username,
       email: password.email,
@@ -148,30 +121,37 @@ export class PasswordListComponent {
   }
 
   encrypPassword(password: string) {
-    const secretKey = 'G-KaPdSgVkYp2s5v8y/B?E(H+MbQeThW';
+    const secretKey = environment.keyEncrypt;
     const passwordEncrypted = AES.encrypt(password, secretKey).toString();
     return passwordEncrypted;
   }
   decryptPassword(password: string) {
-    const secretKey = 'G-KaPdSgVkYp2s5v8y/B?E(H+MbQeThW';
+    const secretKey = environment.keyEncrypt;
     const decryptPassword = AES.decrypt(password, secretKey).toString(enc.Utf8);
     return decryptPassword;
   }
   onDecryptPassword(password: string, i: any) {
-    if (this.decrypStatus === "Encrypt") {
+    if (this.decrypStatus === 'Encrypt') {
       const decPassword = this.encrypPassword(password);
-      this.sitePasswords[i].password = decPassword
-      console.log("mostrando contrasena encriptada")
-      console.log(decPassword)
-      this.decrypStatus = "Decrypt"
-    }
-    else if(this.decrypStatus == "Decrypt"){
+      this.sitePasswords[i].password = decPassword;
+      this.canEdit = false;
+      this.decrypStatus = 'Decrypt';
+    } else if (this.decrypStatus == 'Decrypt') {
       const decPassword = this.decryptPassword(password);
-      this.sitePasswords[i].password = decPassword
-      this.decrypStatus = "Encrypt"
-      console.log("password ")
+      this.sitePasswords[i].password = decPassword;
+      this.canEdit = true;
+      this.decrypStatus = 'Encrypt';
     }
   }
+
+  onCancel() {
+    this.formGroup.setValue({
+      email: '',
+      username: '',
+      password: '',
+    });
+  }
+
   createForm() {
     return this.formBuilder.group({
       email: ['', Validators.required],

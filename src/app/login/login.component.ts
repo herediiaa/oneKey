@@ -24,7 +24,6 @@ export class LoginComponent {
     this.googleAuthService
       .logIn(value.email, value.password)
       .then((userReference: any) => {
-        console.log('estaba ya registrado', userReference);
         this.router.navigate(['/site-list']);
       })
       .catch((err: any) => {
@@ -33,7 +32,24 @@ export class LoginComponent {
           setTimeout(() => {
             this.isError = false;
           }, 2000);
+        }else if(err.code == 'auth/invalid-email'){
+          this.formError(`${value.email} is not a valid user`);
+          setTimeout(() => {
+            this.isError = false;
+          }, 2000);
         }
+        else if(err.code == 'auth/wrong-password'){
+          this.formError(`${value.email} is not a valid user`);
+          setTimeout(() => {
+            this.isError = false;
+          }, 2000);
+        }else if(err.code == 'auth/too-many-requests'){
+          this.formError(`Please Do It Later`);
+          setTimeout(() => {
+            this.isError = false;
+          }, 2000);
+        }
+        
       });
   }
   createForm() {

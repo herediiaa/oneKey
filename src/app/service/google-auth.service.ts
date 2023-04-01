@@ -19,12 +19,10 @@ export class GoogleAuthService {
     this.afAuth.authState.subscribe((user) => {
       if (user) {
         localStorage.setItem('user', JSON.stringify(user));
-        this.router.navigate(['/site-list'])
-        console.log('hay un usuario logeado')
+        this.router.navigate(['/site-list']);
         return;
       }
-      console.log('no hay nadie logeado');
-
+      localStorage.setItem('user', 'null');
     });
   }
   async singUp(email: string, password: string) {
@@ -38,19 +36,23 @@ export class GoogleAuthService {
         return error.code;
       });
   }
-  logIn(email:string,password:string){
-    return this.afAuth.signInWithEmailAndPassword(email,password)
+  logIn(email: string, password: string) {
+    return this.afAuth.signInWithEmailAndPassword(email, password);
   }
-  googleAuth(){
-    return this.afAuth.signInWithPopup(new auth.GoogleAuthProvider()).then((userDocReference)=>{
-      console.log(userDocReference)
-      this.databaseService.createUser(userDocReference.user)
-    })
+  googleAuth() {
+    return this.afAuth
+      .signInWithPopup(new auth.GoogleAuthProvider())
+      .then((userDocReference) => {
+        this.databaseService.createUser(userDocReference.user);
+      });
   }
   logOut() {
     this.afAuth.signOut();
-    localStorage.setItem("user","null")
-    return true
+    localStorage.setItem('user', 'null');
+    return true;
   }
-
+  isLoggedIn() {
+    const user = JSON.parse(localStorage.getItem('user')!);
+    return user !== null ? true : false;
+  }
 }

@@ -35,9 +35,7 @@ export class DatabaseService {
       .valueChanges({ idField: 'id' });
   }
   editSite(values: any, userUid: string, siteId: string) {
-    console.log(
-      `se esta actualizando este usuario ${userUid}, con esta informacion ${values.siteName} de este sitio ${siteId}`
-    );
+
     return this.dataBaseFirestore
       .collection(`users/${userUid}/sites`)
       .doc(siteId)
@@ -52,19 +50,13 @@ export class DatabaseService {
       .collection(`users/${userUid}/sites`)
       .doc(siteId)
       .delete()
-      .then(() => {
-        console.log(`eliminando el sitio ${siteId} del usuario ${userUid}`);
-      });
+
   }
 
   /* QUERY FROM SITES PASSWORDS */
 
   createPassword(passwordData: any, siteId: string, userUid: string) {
-    console.log(
-      `estas agregando una contrase al sitio ${siteId} con estos datos ${JSON.stringify(
-        passwordData
-      )} de este usuario ${userUid}`
-    );
+
 
     return this.dataBaseFirestore
       .collection(`users/${userUid}/sites/${siteId}/passwords`)
@@ -79,15 +71,10 @@ export class DatabaseService {
     }
 
     )
-    console.log(
-      `estas editando esta ${passwordId} contrasena del sitio ${siteId} con estos datos ${JSON.stringify(
-        passwordData
-      )} de este usuario ${userUid}`
-    );
+
   }
   delitePassword(userId:string,siteId:string,passwordId:string){
     return this.dataBaseFirestore.collection(`users/${userId}/sites/${siteId}/passwords`).doc(passwordId).delete()
-    console.log( `borrando contrasena de usuario ${userId} del sitio ${siteId} y contrasena ${passwordId}`)
   }
   loadPasswords(siteId: string, userUid: string) {
     return this.dataBaseFirestore
@@ -95,16 +82,4 @@ export class DatabaseService {
     .valueChanges({ idField: 'id' })
    
   }
-
-  /* real time database */
-  /*   updateUser(user: any):void{
-    this.db.object<any>('/users/' + user.uid).update({
-      uid: user.uid,
-      name:user.displayName,
-      email: user.email,
-      isAdmin: false,
-      photoUrl:user.photoURL
-      
-    })
-  } */
 }

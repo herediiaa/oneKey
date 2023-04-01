@@ -4,10 +4,16 @@ import { LoginComponent } from './login/login.component';
 import { SingUpComponent } from './sing-up/sing-up.component';
 import { SiteListComponent } from './site-list/site-list.component';
 import { PasswordListComponent } from './password-list/password-list.component';
+import { GuardGuard } from './guards/guard.guard';
+import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
   {
     path: '',
+    component: HomeComponent,
+  },
+  {
+    path: "login",
     component: LoginComponent,
   },
   {
@@ -16,11 +22,11 @@ const routes: Routes = [
   },
   {
     path: 'site-list',
-    component: SiteListComponent,
+    component: SiteListComponent, canActivate:[GuardGuard]
   },
   {
     path: 'password-list',
-    component: PasswordListComponent,
+    component: PasswordListComponent,canActivate:[GuardGuard] 
   },
 ];
 

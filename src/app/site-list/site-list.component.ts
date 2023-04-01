@@ -18,8 +18,6 @@ export class SiteListComponent {
   ) {
     this.formGroup = this.createForm()
     this.userInfo = JSON.parse(localStorage.getItem("user")!)
-    console.log(this.userInfo)
-    console.log(this.userInfo?.uid)
     this.loadSites(this.userInfo.uid)
   }
  
@@ -47,9 +45,6 @@ export class SiteListComponent {
   } 
   onSubmit(values:any) {
     if (this.formState === 'Add New') {
-      console.log("el user id del que esta en linea es ",this.userInfo.uid )
-      console.log(values)
-      console.log(this.userInfo.uid)
       this.databaseService.saveSite(values,this.userInfo.uid).then(()=>{
         this.resetForm()
         this.messageSuccessfull("site create correctly")
@@ -86,26 +81,17 @@ export class SiteListComponent {
       siteUrl: "",
       siteImgUrl: "",
     })
-    this.formState = "New"
+    this.formState = "Add New"
   }
   deliteSite(site:any) {
     this.databaseService.deliteSite(this.userInfo.uid,site.id).then(()=>{
       this.messageSuccessfull(`Site ${site.siteName} delite correctly`)
+      this.onCancel()
       setTimeout(() => {
         this.isSuccess = false
       }, 2000);
     })
-   /*  this.passwordManagerService
-      .deliteSite(id)
-      .then(() => {
-        'delite site successfully';
-        setTimeout(() => {
-          this.isSuccess = false;
-        }, 2000);
-      })
-      .catch(() => {
-        'something went wrong';
-      }); */
+
   }
   messageSuccessfull(mesagge: string) {
     this.isSuccess = true;
