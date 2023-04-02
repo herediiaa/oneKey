@@ -5,6 +5,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+.fa-google {
+  color: #4285F4; /* color de Google */
+}
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

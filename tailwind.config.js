@@ -7,6 +7,9 @@ module.exports = {
     extend: {
       fontFamily: {
         nunito: ['"Nunito"', ...defaultTheme.fontFamily.sans]
+      },
+      backgroundColor: {
+        'google': '#4285F4', // Color de fondo de Google
       }
     }
   },
