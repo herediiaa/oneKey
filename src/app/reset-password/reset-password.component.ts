@@ -31,9 +31,9 @@ export class ResetPasswordComponent {
           this.router.navigate(["/login"])
         }, 2000);
       }if(response.code === "auth/invalid-email"){
-        this.formSucces("Password reset email is not valid")
+        this.formError("Password reset email is not valid")
         setTimeout(() => {
-          this.isSuccess = false
+          this.isError = false
           this.resetForm()
         }, 2000);
       }
@@ -59,9 +59,5 @@ export class ResetPasswordComponent {
     this.isSuccess = true;
     this.popMessage = text;
   }
-  onEnterGoogle() {
-    this.googleAuthService.googleAuth().then(() => {
-      this.router.navigate(['']);
-    });
-  }
+
 }

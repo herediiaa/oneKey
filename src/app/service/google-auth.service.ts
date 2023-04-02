@@ -65,4 +65,12 @@ export class GoogleAuthService {
         return error
       });
   }
+  confirmPasswordReset(obbCode:string, password:string){
+    return this.afAuth.confirmPasswordReset(obbCode,password).then((response)=>{
+      return "success"
+    }).catch((error)=>{
+      console.log(error)
+      return error
+    })
+  }
 }

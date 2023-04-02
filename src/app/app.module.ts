@@ -20,6 +20,7 @@ import {MatIconModule} from '@angular/material/icon';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './home/home.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { AComponent } from './a/a.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     LoginComponent,
     HomeComponent,
     ResetPasswordComponent,
+    AComponent,
   ],
   imports: [
     FormsModule,

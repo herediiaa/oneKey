@@ -7,12 +7,17 @@ import { PasswordListComponent } from './password-list/password-list.component';
 import { GuardGuard } from './guards/guard.guard';
 import { HomeComponent } from './home/home.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { AComponent } from './a/a.component';
 
 const routes: Routes = [
   {
     path: '',
     redirectTo: '/home',
     pathMatch: 'full',
+  },
+  {
+    path: 'a',
+    component: AComponent,
   },
 
   {
