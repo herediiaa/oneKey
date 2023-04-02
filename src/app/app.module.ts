@@ -19,6 +19,7 @@ import { AngularFireModule } from '@angular/fire/compat';
 import {MatIconModule} from '@angular/material/icon';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './home/home.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { HomeComponent } from './home/home.component';
     NavbarComponent,
     LoginComponent,
     HomeComponent,
+    ResetPasswordComponent,
   ],
   imports: [
     FormsModule,

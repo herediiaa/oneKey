@@ -6,6 +6,7 @@ import { SiteListComponent } from './site-list/site-list.component';
 import { PasswordListComponent } from './password-list/password-list.component';
 import { GuardGuard } from './guards/guard.guard';
 import { HomeComponent } from './home/home.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 const routes: Routes = [
   {
@@ -17,6 +18,10 @@ const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
+  },
+  {
+    path: 'resetPassword',
+    component: ResetPasswordComponent,
   },
   {
     path: 'login',

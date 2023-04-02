@@ -55,4 +55,14 @@ export class GoogleAuthService {
     const user = JSON.parse(localStorage.getItem('user')!);
     return user !== null ? true : false;
   }
+  ForgotPassword(passwordResetEmail: string) {
+    return this.afAuth
+      .sendPasswordResetEmail(passwordResetEmail)
+      .then(() => {
+        return "success"
+      })
+      .catch((error) => {
+        return error
+      });
+  }
 }

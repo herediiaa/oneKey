@@ -11,7 +11,7 @@
           The Username or Password is Wrong
         </div>
         <form
-          class="space-y-6"
+          class="flex flex-col gap-2"
           [formGroup]="formGroup"
           (ngSubmit)="onSubmit(formGroup.value)"
         >
@@ -62,9 +62,20 @@
             >
               Password must be completed
             </div>
-          </div>
 
-          <button
+            <div class="flex flex-row justify-start  items-center mt-1">
+              <a
+                routerLink="/resetPassword"
+                type="button"
+                class="text-black font-medium hover:text-gray-700"
+              >
+              Did you forget your password?
+              </a>
+            </div>
+          </div>
+          <div class="mt-4">
+
+            <button
             [disabled]="!formGroup.valid"
             type="submit"
             class="<%= !formGroup.valid ? 'hover:bg-gray-900' : '' %> text-center border-2 mt-0 bg-gray-800 text-white border-white font-medium w-full py-2.5 px-5 rounded-lg shadow-md"
@@ -83,6 +94,8 @@
 
 
         </button>
+          </div>
+
         </form>
       </div>
     </div>
